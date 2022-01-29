@@ -9,6 +9,7 @@ import random
 import itertools
 import msvcrt
 
+
 def del_0(b):
     while 0 in b:
         b.remove(0)
@@ -25,7 +26,8 @@ def left_add(b):
                 del b[i + 1]
                 b.append(0)
         return b
-def right_add( b):
+
+def right_add(b):
     b = del_0(b)
     b.reverse()
     length = len(b)
@@ -66,8 +68,6 @@ def right(gird):
     for i in range(4):
         gird[i] = ([0, 0, 0, 0] + right_add(gird[i]))[-4:]
     return gird
-
-
 class Game:
     grid=[]
     controls=[b"w",b"s",b"a",b"d"]
@@ -81,13 +81,16 @@ class Game:
         while self.grid[init_xy[0]][init_xy[1]]!=0:
             init_xy=random.choice(all_xy)
         self.grid[init_xy[0]][init_xy[1]]=number
+        
     def print_screen(self):
         a = "+" + "-" * 5 + "+" + "-" * 5 + "+" + "-" * 5 + "+" + "-" * 5 + "+"
         print("\n" + a)
         for i in self.grid:
             print("|" + (("|").join([("{}".format(str(j or " ").center(5))) for j in i])) + "|", ("\n" + a))
+
     def logic(self,control):
         grid = {b'w': up, b'a': left, b's': down, b'd': right}[control]([[c for c in r] for r in self.grid])
+        
         if grid!=self.grid:
             del self.grid[:]
             self.grid.extend(grid)
@@ -105,6 +108,7 @@ class Game:
         return 0,"weiter"
 
 
+
     def main_loop(self):
         #self.grid=[[2, 0, 0, 2], [2, 2, 2, 2],[2, 0, 2, 2],[2, 2, 2, 2]]
         #self.grid=[[1,2,3,4],[5,0,7,8],[0,11,12,13],[14,15,16,17]]
@@ -119,11 +123,12 @@ class Game:
                 status,info=self.logic(a)  #go logic (choice Richtung)
                 if status!=0:#if status !=0  游戏不能进行下去
                     print(info)#输赢
-                    if input("y/n").lower()=="y":
+                    if input("weiter ? y/n").lower()=="y":
                         break#weiter
                     else:
                         sys.exit(0)#end
         self.main_loop()
+
 
 
 if __name__=="__main__":
